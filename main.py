@@ -11,23 +11,27 @@ cell class - en ruta i spelbrädet
 
 '''
 from board import Board
+from game import Game
 
 def main():
     (width, height) = (600, 800)
     game_running = True
-    board = Board(6)
     pygame.init()
     window = pygame.display.set_mode((width, height))
     pygame.display.set_caption("BATTLESHIP 1337")
     background_color = (255, 255, 255)
     window.fill(background_color)
-    pygame.display.flip()
+
+    game = Game(window)
+
     while game_running:
         for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                board.check_cell(event.pos)
+                pygame.display.flip()
             if event.type == pygame.QUIT:
                 pygame.quit()
                 game_running = False
-
 
 
 main()
