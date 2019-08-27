@@ -27,8 +27,15 @@ def main():
     while game_running:
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
-                board.check_cell(event.pos)
-                pygame.display.flip()
+                x, y = event.pos
+                if y <= width:
+                    game.event_handler(event)
+                    pygame.display.flip()
+            if event.type == pygame.KEYDOWN:
+                print(game.current_gamestate)
+                if (event.key == pygame.K_LEFT) & (game.current_gamestate == "setup"):
+                    print('change')
+                    game.change_current_player()
             if event.type == pygame.QUIT:
                 pygame.quit()
                 game_running = False
