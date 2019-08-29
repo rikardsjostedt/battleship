@@ -16,6 +16,7 @@ class Cell:
         self.py = y * cell_size
         self.hit = False
         self.occupied = False
+        self.parent = None
 
     def render(self):
         font = pygame.font.SysFont('Comic Sans MS', 30)
@@ -28,7 +29,7 @@ class Cell:
         elif self.occupied & (self.game.current_gamestate == "setup"):
             pygame.draw.rect(self.window, (0, 0, 0), (self.px, self.py, self.cell_size, self.cell_size))
         else:
-            pygame.draw.rect(self.window, (0, 0, 255), (self.px, self.py, self.cell_size, self.cell_size))
+            pygame.draw.rect(self.window, (64, 244, 224), (self.px, self.py, self.cell_size, self.cell_size))
 
         self.window.blit(text, (self.px, self.py))
 
@@ -42,6 +43,8 @@ class Cell:
             elif (not self.hit) & self.occupied:
                 self.hit = True
                 self.render()
+                if not self.parent.check_if_alive():
+                    self.parent.alive = False
                 return False
             else:
                 self.hit = True

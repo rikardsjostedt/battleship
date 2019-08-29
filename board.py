@@ -41,11 +41,22 @@ class Board:
         self.window.blit(text, text_rect)
         pygame.display.flip()
 
-    def check_cell(self, pos, boat = None):
+    def check_cell(self, pos, boat=None):
         px, py = pos
+        #print(boat)
         x = int(px / self.cell_size)
         y = int(py / self.cell_size)
         if self.game.current_gamestate == "setup":
-            return boat.place(x, y, )
+            return boat.check(x, y, boat)
         else:
             return self.cells[x][y].trigger_click()
+
+    def render_winner_text(self, player):
+        font = pygame.font.SysFont('Comic Sans MS', 30)
+        self.window.fill([255, 255, 255])
+        winner_text = "Spelare " + str(player.id) + " vinner!"
+        text = font.render(winner_text, False, (0, 0, 0))
+        w, h = pygame.display.get_surface().get_size()
+        text_rect = text.get_rect(center=(w / 2, w + ((h - w) / 2)))
+        self.window.blit(text, text_rect)
+        pygame.display.flip()
