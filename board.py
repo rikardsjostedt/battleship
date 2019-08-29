@@ -40,10 +40,12 @@ class Board:
         text_rect = text.get_rect(center=(w/2, w + ((h-w)/2)))
         self.window.blit(text, text_rect)
         pygame.display.flip()
-        print(self.id)
 
-    def check_cell(self, pos):
+    def check_cell(self, pos, boat = None):
         px, py = pos
         x = int(px / self.cell_size)
         y = int(py / self.cell_size)
-        return self.cells[x][y].trigger_click()
+        if self.game.current_gamestate == "setup":
+            return boat.place(x, y, )
+        else:
+            return self.cells[x][y].trigger_click()

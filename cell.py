@@ -36,9 +36,12 @@ class Cell:
         if self.game.current_gamestate == "setup":
             self.occupied = True
 
-
         elif self.game.current_gamestate == "running":
             if self.hit:
+                return False
+            elif (not self.hit) & self.occupied:
+                self.hit = True
+                self.render()
                 return False
             else:
                 self.hit = True
